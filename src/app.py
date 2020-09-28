@@ -2,10 +2,14 @@
 
 #load libraries
 from flask import Flask
+# load modules
+from src.endpoints.wordcount import wordcount
 
 # init Flask app
 app = Flask(__name__)
 
+# register blueprints. ensure that all paths are versioned!
+app.register_blueprint(wordcount)
 
 @app.route('/')
 def home():
