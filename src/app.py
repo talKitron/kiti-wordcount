@@ -3,12 +3,15 @@
 #load libraries
 import os
 from flask import Flask, Response
+from flask_sqlalchemy import SQLAlchemy
 # load modules
 from src.endpoints.wordcount import wordcount
 
 # init Flask app
 app = Flask(__name__)
 #app.config.from_object(os.environ['APP_SETTINGS'])
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app)
 
 
 # register blueprints. ensure that all paths are versioned!
