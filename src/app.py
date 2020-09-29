@@ -2,7 +2,7 @@
 
 #load libraries
 import os
-from flask import Flask
+from flask import Flask, Response
 # load modules
 from src.endpoints.wordcount import wordcount
 
@@ -23,11 +23,11 @@ def env():
 
 @app.route('/')
 def home():
-    return hello_name('World')
+    return Response(hello_name('World'), 200)
 
 @app.route('/<name>')
 def hello_name(name):
-    return "Hello {}!".format(name)
+    return Response("Hello {}!".format(name), 200)
 
 #if __name__ == '__main__':
 #    app.run()
