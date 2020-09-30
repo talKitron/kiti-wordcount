@@ -1,6 +1,6 @@
 """ Flask Application """
 
-#load libraries
+# load libraries
 import os
 from flask import Flask, Response
 from flask_sqlalchemy import SQLAlchemy
@@ -9,9 +9,12 @@ from src.endpoints.wordcount import wordcount
 
 # init Flask app
 app = Flask(__name__)
-#app.config.from_object(os.environ['APP_SETTINGS'])
+app.config.from_object(os.environ['APP_SETTINGS'])
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
+
+# load data models
+from src.models import Result
 
 
 # register blueprints. ensure that all paths are versioned!
@@ -32,5 +35,5 @@ def home():
 def hello_name(name):
     return Response("Hello {}!".format(name), 200)
 
-#if __name__ == '__main__':
-#    app.run()
+if __name__ == '__main__':
+    app.run()
