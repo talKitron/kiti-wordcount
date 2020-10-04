@@ -3,6 +3,7 @@ import pytest
 import requests
 import urllib.parse #urllib.parse.quote(payload)
 
+
 @pytest.mark.parametrize(
     'expected', [
     ("You've reached the test endpoint from wordcount"),
