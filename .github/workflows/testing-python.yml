@@ -4,6 +4,10 @@ name: testing-python
 
 on: [push, pull_request]
 
+env:
+  APP_SETTINGS: config.DevelopmentConfig
+  DATABASE_URL: postgresql:///kiti_wordcount
+
 jobs:
   build:
 
@@ -35,6 +39,3 @@ jobs:
     - name: Run tests with pytest
       run: |
         pytest
-      env:
-        APP_SETTINGS: config.DevelopmentConfig
-        DATABASE_URL: postgresql:///kiti_wordcount
