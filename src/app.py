@@ -8,14 +8,14 @@ from flask_sqlalchemy import SQLAlchemy
 # load modules
 from src.endpoints.wordcount import wordcount
 
-# load data models
-from src.models import Result
-
 # init Flask app
 app = Flask(__name__)
 app.config.from_object(os.environ['APP_SETTINGS'])
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
+
+# load data models
+from src.models import Result
 
 # register blueprints. ensure that all paths are versioned!
 app.register_blueprint(wordcount)
