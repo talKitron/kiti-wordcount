@@ -9,13 +9,13 @@ from flask_sqlalchemy import SQLAlchemy
 from src.endpoints.wordcount import wordcount
 
 # init Flask app
-app = Flask(__name__)
+app = Flask(__name__, template_folder='templates')
 app.config.from_object(os.environ['APP_SETTINGS'])
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
-# load data models
-from src.models import Result
+# load data models - moved to wordcount.py
+# from src.models import Result
 
 # register blueprints. ensure that all paths are versioned!
 app.register_blueprint(wordcount)
@@ -29,11 +29,9 @@ def env():
         return 'APP_SETTINGS not loaded'
 
 
-@app.route('/')
-def home():
-    return Response(hello_name('World'), 200)
-
-
+# @app.route('/')
+# def home():
+#     return hello_name('World')
 @app.route('/<name>')
 def hello_name(name):
     return Response("Hello {}!".format(name), 200)
