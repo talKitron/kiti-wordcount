@@ -27,18 +27,17 @@ def index():
             url = request.form['url']
             r = requests.get(url)
             print(r.text)
-        except:
+        except Exception as e:
             errors.append(
                 "Unable to get URL. Please make sure it's a valid URL and try again."
             )
             return render_template('index.html', errors=errors, results=results)
         if r:
             # text processing
-            raw = BeautifulSoup(r.text, 'html.parser').get_text
-            # set the path
-            nltk.data.path.append('./nltk_data/')
+            raw = BeautifulSoup(r.text.lower(), 'html.parser').get_text()
+            nltk.data.path.append('./src/nltk_data/')
             tokens = nltk.word_tokenize(raw)
-            text = nltk.text(tokens)
+            text = nltk.Text(tokens)
             # remove punctuation and count raw words
             nonPunct = re.compile('.*[A-Za-z].*')
             raw_words = [w for w in text if nonPunct.match(w)]
@@ -49,16 +48,17 @@ def index():
             # save the results
             results = sorted(
                 no_stop_words_count.items(),
-                key=operator.itemgetter(1),
-                reverse=True
-            )
+                key = operator.itemgetter(1),
+                reverse = True
+            )[:10]
             try:
                 result = Result(
-                    url=url,
-                    results_all=raw_word_count,
-                    result_no_stop_words=no_stop_words_count
+                    url = url,
+                    result_all = raw_word_count,
+                    result_no_stop_words = no_stop_words_count
                 )
                 result.save()
-            except:
+            except Exception as e:
+                # errors.append(str(e))
                 errors.append('Unable to add item to database.')
     return render_template('index.html', errors=errors, results=results)
